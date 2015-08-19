@@ -177,8 +177,8 @@ net1 = NeuralNet(
       )
 
 scaler = StandardScaler()
-X = scaler.fit_transform(training).astype(np.float32)
-X_test = scaler.transform()
+X = scaler.fit_transform(X).astype(np.float32)
+X_test = scaler.transform(X_test)
 y = training['y'].astype(np.int32)
 
 y_test = hold[['HandStart', 'FirstDigitTouch', 'BothStartLoadPhase', 'LiftOff', 'Replace', 'BothReleased']]
