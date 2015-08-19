@@ -13,6 +13,7 @@ import sys
 
 train = gl.SFrame('../data/train_1')
 
+print train.shape
 #validation set will be 8th series
 
 # train = train[train['subj'] == 1]
