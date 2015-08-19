@@ -6,7 +6,7 @@ Let's try to create global train
 '''
 
 import graphlab as gl
-train_result = []
+# train_result = []
 
 for subj in range(1, 13):
   for series in range(1, 9):
@@ -19,14 +19,8 @@ for subj in range(1, 13):
     temp = data.join(events, on='id')
     temp['subj'] = subj
     temp['series'] = series
+    temp['time'] = temp.apply(lambda x: int(x['id'].split('_')[-1]))
     print temp.shape
-    train_result += [temp]
+    temp.save('../data/train_{subj}'.format(subj=subj))
+    # train_result += [temp]
 
-train_new = train_result[0]
-for i in range(1, len(train_result)):
-    train_new = train_new.append(train_result[i])
-
-train_new['time'] = train_new.apply(lambda x: int(x['id'].split('_')[-1]))
-
-train_new.save('../data/train.csv')
-train_new.save('../data/train')

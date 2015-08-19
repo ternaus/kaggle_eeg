@@ -5,6 +5,9 @@ __author__ = 'Vladimir Iglovikov'
 
 import graphlab as gl
 from lasagne.nonlinearities import softmax
+from sklearn.metrics import roc_auc_score
+
+
 import sys
 #For now I will only work with first person
 
@@ -31,7 +34,7 @@ print hold.column_names()
 
 sys.exit()
 
-from __future__ import division
+
 from sklearn.metrics import roc_auc_score
 from lasagne.updates import nesterov_momentum
 from nolearn.lasagne import NeuralNet
@@ -120,7 +123,7 @@ net1 = NeuralNet(
       # dropout2_p=0.3,
       # hidden1_num_units=400,  # number of units in hidden layer
       # output_nonlinearity=None,  # output layer uses identity function
-      output_num_units=1,  # 1 target values
+      output_num_units=7,  # 1 target values
       outout_nonlinearity=softmax,
 
       # optimization method:
@@ -143,4 +146,24 @@ net1 = NeuralNet(
 
 scaler = StandardScaler()
 X = scaler.fit_transform(training).astype(np.float32)
+X_test = scaler.transform()
 y = training['y'].astype(np.int32)
+
+y_test = hold[['HandStart', 'FirstDigitTouch', 'BothStartLoadPhase', 'LiftOff', 'Replace', 'BothReleased']]
+
+net1.fit(X, y)
+
+prediction = net1.predict_proba(X_test)
+
+def score(y_test, prediction):
+  result = []
+  result += [roc_auc_score(y_test['HandStart'], prediction[:, 0])]
+  result += [roc_auc_score(y_test['FirstDIgitTouch'], prediction[:, 1])]
+  result += [roc_auc_score(y_test['BothStartLoadPhase'], prediction[:, 2])]
+  result += [roc_auc_score(y_test['LiftOff'], prediction[:, 3])]
+  result += [roc_auc_score(y_test['Replace'], prediction[:, 4])]
+  result += [roc_auc_score(y_test['BothReleased'], prediction[:, 5])]
+  return np.mean(result)
+
+print score(y_test, prediction[:6, ])
+
