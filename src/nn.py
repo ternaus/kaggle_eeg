@@ -191,9 +191,9 @@ net1 = NeuralNet(
 scaler = StandardScaler()
 X = scaler.fit_transform(X).astype(np.float32)
 X_test = scaler.transform(X_test)
-y = training['y'].astype(np.int32)
+y = np.array(training['y']).astype(np.int32)
 
-y_test = hold[['HandStart', 'FirstDigitTouch', 'BothStartLoadPhase', 'LiftOff', 'Replace', 'BothReleased']]
+y_test = hold[['HandStart', 'FirstDigitTouch', 'BothStartLoadPhase', 'LiftOff', 'Replace', 'BothReleased']].to_dataframe()
 
 net1.fit(X, y)
 
