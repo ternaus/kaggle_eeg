@@ -63,7 +63,7 @@ features = ['Fp1',
             'O2',
             'PO10']
 
-print X.shape
+print training.shape
 X = training[features].to_dataframe()
 print X.shape
 
