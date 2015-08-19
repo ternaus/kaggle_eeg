@@ -9,6 +9,7 @@ import graphlab as gl
 # train_result = []
 
 for subj in range(1, 13):
+  temp1 = gl.SFrame()
   for series in range(1, 9):
     print (subj, series)
     data = gl.SFrame('../data/train/subj{subj}_series{series}_data.csv'.format(subj=subj, series=series))
@@ -21,6 +22,7 @@ for subj in range(1, 13):
     temp['series'] = series
     temp['time'] = temp.apply(lambda x: int(x['id'].split('_')[-1]))
     print temp.shape
-    temp.save('../data/train_{subj}'.format(subj=subj))
-    # train_result += [temp]
+    temp1 = temp1.append(temp)
+  temp1.save('../data/train_{subj}'.format(subj=subj))
+
 
