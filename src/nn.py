@@ -30,9 +30,41 @@ train['y'] = train.apply(lambda x: create_y(x))
 hold = train[train['series'] == 8]
 training = train[train['series'] != 8]
 
-print hold.column_names()
+features = ['Fp1',
+            'Fp2',
+            'F7',
+            'F3',
+            'Fz',
+            'F4',
+            'F8',
+            'FC5',
+            'FC1',
+            'FC2',
+            'FC6',
+            'T7',
+            'C3',
+            'Cz',
+            'C4',
+            'T8',
+            'TP9',
+            'CP5',
+            'CP1',
+            'CP2',
+            'CP6',
+            'TP10',
+            'P7',
+            'P3',
+            'Pz',
+            'P4',
+            'P8',
+            'P09',
+            'O1',
+            'Oz',
+            'O2',
+            'PO10']
 
-sys.exit()
+X = training[features].to_dataframe()
+X_test = hold[features].to_dataframe()
 
 
 from sklearn.metrics import roc_auc_score
