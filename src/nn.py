@@ -11,11 +11,11 @@ from sklearn.metrics import roc_auc_score
 import sys
 #For now I will only work with first person
 
-train = gl.SFrame('../data/train.csv')
+train = gl.SFrame('../data/train_1')
 
 #validation set will be 8th series
 
-train = train[train['subj'] == 1]
+# train = train[train['subj'] == 1]
 
 #let's prepare human being train
 def create_y(x):
