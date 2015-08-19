@@ -29,3 +29,4 @@ for i in range(1, len(train_result)):
 train_new['time'] = train_new.apply(lambda x: int(x['id'].split('_')[-1]))
 
 train_new.save('../data/train.csv')
+train_new.save('../data/train')
