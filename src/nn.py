@@ -149,6 +149,7 @@ class AdjustVariable(object):
         getattr(nn, self.name).set_value(new_value)
 
 
+num_classes = 7
 
 net1 = NeuralNet(
       layers=[  # three layers: one hidden layer
@@ -160,14 +161,14 @@ net1 = NeuralNet(
           ('output', layers.DenseLayer),
           ],
       # layer parameters:
-      input_shape=(None, training.shape[1]),
+      input_shape=(None, X.shape[1]),
       # dropout1_p=0.1,
       hidden0_num_units=100,  # number of units in hidden layer
       # dropout2_p=0.3,
       # hidden1_num_units=400,  # number of units in hidden layer
       # output_nonlinearity=None,  # output layer uses identity function
-      output_num_units=7,  # 1 target values
-      outout_nonlinearity=softmax,
+      output_num_units=num_classes,  # 1 target values
+      output_nonlinearity=softmax,
 
       # optimization method:
       update=nesterov_momentum,
