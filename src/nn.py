@@ -28,8 +28,15 @@ def create_y(x):
 
 train['y'] = train.apply(lambda x: create_y(x))
 
+print train.shape
+
 hold = train[train['series'] == 8]
+print 'hold'
+print hold.shape
+
 training = train[train['series'] != 8]
+print 'training'
+print training.shape
 
 features = ['Fp1',
             'Fp2',
