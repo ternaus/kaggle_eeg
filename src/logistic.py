@@ -4,9 +4,8 @@ __author__ = 'Vladimir Iglovikov'
 #read train
 
 import graphlab as gl
-from lasagne.nonlinearities import softmax
 from sklearn.metrics import roc_auc_score
-
+import numpy as np
 
 import sys
 #For now I will only work with first person
@@ -84,12 +83,23 @@ import numpy as np
 import math
 import pandas as pd
 
+score = []
 
-clf = gl.logistic_classifier.create(training, target='HandStart', features=features)
+for target in ['HandStart',
+               'FirstDigitTouch',
+               'BothStartLoadPhase',
+               'LiftOff',
+               'Replace',
+               'BothReleased']:
+  clf = gl.logistic_classifier.create(training, target=target, features=features, validation_set=None)
 
-prediction = clf.predict(hold, output_type='probability')
+  # print clf.summary()
+  prediction = clf.predict(hold, output_type='probability')
 
-print roc_auc_score(hold['HandStart'], prediction)
+  y_true = list(hold[target])
+  score += [roc_auc_score(y_true, prediction)]
+
+print np.mean(score)
 #
 # y_test = hold[['HandStart', 'FirstDigitTouch', 'BothStartLoadPhase', 'LiftOff', 'Replace', 'BothReleased']].to_dataframe()
 #
