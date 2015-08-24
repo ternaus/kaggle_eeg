@@ -6,7 +6,7 @@ Let's try to create global train
 '''
 
 import graphlab as gl
-# train_result = []
+train_result = []
 
 for subj in range(1, 13):
   temp1 = gl.SFrame()
@@ -42,18 +42,16 @@ for subj in range(1, 13):
     print (subj, series)
     test = gl.SFrame('../data/test/subj{subj}_series{series}_data.csv'.format(subj=subj, series=series))
 
-    print 'data.shape', data.shape
-    print 'events.shape', events.shape
 
-    temp_test = gl.SFrame()
+    # temp_test = gl.SFrame()
+    # temp_test['id'] = test['id']
 
-    temp_test['subj'] = subj
+    test['subj'] = subj
 
-    temp_test['series'] = series
+    test['series'] = series
 
-    temp_test['time'] = test.apply(lambda x: int(x['id'].split('_')[-1]))
+    test['time'] = test.apply(lambda x: int(x['id'].split('_')[-1]))
 
-    print temp_test.shape
-    temp1_test.append(temp_test)
+    temp1_test = temp1_test.append(test)
 
   temp1_test.save('../data/test_{subj}'.format(subj=subj))

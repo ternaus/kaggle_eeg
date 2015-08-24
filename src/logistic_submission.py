@@ -17,8 +17,11 @@ import sys
 submission = []
 
 for subject in range(1, 13):
+  print 'subject = ', subject
   train = gl.SFrame('../data/train_{subject}'.format(subject=subject))
   test = gl.SFrame('../data/test_{subject}'.format(subject=subject))
+
+
   temp = gl.SFrame()
 
   features = ['Fp1',
@@ -52,7 +55,10 @@ for subject in range(1, 13):
               'O1',
               'Oz',
               'O2',
-              'PO10']
+              'PO10',
+              'time',
+              'subj',
+              'series']
 
   temp['id'] = test['id']
 
