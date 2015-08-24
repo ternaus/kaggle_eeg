@@ -84,4 +84,4 @@ for target in ['HandStart',
 
 
 print 'save submission to file'
-temp.save('predictions/LG_raw_full.csv', index=False)
+temp.save('predictions/LG_raw_full.csv')
