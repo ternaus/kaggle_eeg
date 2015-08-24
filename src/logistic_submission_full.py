@@ -14,17 +14,18 @@ import pandas as pd
 import sys
 #For now I will only work with first person
 
-submission = []
 
+train = gl.SFrame()
+test = gl.SFrame()
+
+print 'read_train'
 for subject in range(1, 13):
   print 'subject = ', subject
-  train = gl.SFrame('../data/train_{subject}'.format(subject=subject))
-  test = gl.SFrame('../data/test_{subject}'.format(subject=subject))
+  train = train.append(gl.SFrame('../data/train_{subject}'.format(subject=subject)))
+  test = test.append(gl.SFrame('../data/test_{subject}'.format(subject=subject)))
 
 
-  temp = gl.SFrame()
-
-  features = ['Fp1',
+features = ['Fp1',
               'Fp2',
               'F7',
               'F3',
@@ -57,29 +58,30 @@ for subject in range(1, 13):
               'O2',
               'PO10',
               'time',
-              # 'subj',
+              'subj',
               'series']
 
-  temp['id'] = test['id']
 
-  for target in ['HandStart',
-                 'FirstDigitTouch',
-                 'BothStartLoadPhase',
-                 'LiftOff',
-                 'Replace',
-                 'BothReleased']:
 
-    clf = gl.logistic_classifier.create(train,
-                                        target=target,
-                                        features=features,
-                                        validation_set=None,
-                                        max_iterations=100)
+temp = gl.SFrame()
+temp['id'] = test['id']
 
-    temp[target] = clf.predict(test, output_type='probability')
+for target in ['HandStart',
+               'FirstDigitTouch',
+               'BothStartLoadPhase',
+               'LiftOff',
+               'Replace',
+               'BothReleased']:
 
-  submission += [temp.to_dataframe()]
+  clf = gl.logistic_classifier.create(train,
+                                      target=target,
+                                      features=features,
+                                      validation_set=None,
+                                      max_iterations=100)
 
-submission = pd.concat(submission)
+  temp[target] = clf.predict(test, output_type='probability')
+
+
 
 print 'save submission to file'
-submission.to_csv('predictions/LG_raw.csv', index=False)
+temp.save('predictions/LG_raw_full.csv', index=False)
