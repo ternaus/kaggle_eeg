@@ -102,11 +102,10 @@ for target in ['HandStart',
 
   print("Training model...")
 
+  y = np.array(train[target]).astype(np.int32)
   model.fit(X, y, nb_epoch=20, batch_size=128, validation_split=0.2)
 
   proba = model.predict_proba(X_test)
-  # print clf.summary()
-  y = np.array(train[target]).astype(np.int32)
 
   prediction = model.predict_proba(X_test)[:, 1]
   y_true = list(hold[target])
