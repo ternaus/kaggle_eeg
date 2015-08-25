@@ -69,9 +69,13 @@ for subject in range(1, 13):
                  'Replace',
                  'BothReleased']:
 
-    clf = gl.graphlab.deeplearning.create(train,
+    net = gl.deeplearning.create(train, target)
+
+    clf = gl.neuralnet_classifier.create(train,
                                         target=target,
-                                        features=features)
+                                        features=features,
+                                         max_iterations=100,
+                                         network=net)
 
     temp[target] = clf.predict(test, output_type='probability')
 
