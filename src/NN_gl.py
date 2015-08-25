@@ -74,7 +74,7 @@ for subject in range(1, 13):
     clf = gl.neuralnet_classifier.create(train,
                                         target=target,
                                         features=features,
-                                         max_iterations=100,
+                                         # max_iterations=100,
                                          network=net)
 
     temp[target] = clf.predict(test, output_type='probability')
