@@ -167,7 +167,7 @@ layers0 = [('input', InputLayer),
            ('output', DenseLayer),
            ]
 
-num_units = 200
+num_units = 300
 num_features = X.shape[1]
 
 import numpy as np
@@ -212,7 +212,7 @@ for target in ['HandStart',
   clf.fit(X, y)
   # prediction = clf.predict(hold, output_type='probability')
 
-  prediction = clf.predict_proba(X_test)[:, 0]
+  prediction = clf.predict_proba(X_test)[:, 1]
   y_true = list(hold[target])
   score += [roc_auc_score(y_true, prediction)]
 

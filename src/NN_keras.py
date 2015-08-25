@@ -108,7 +108,7 @@ for target in ['HandStart',
   # print clf.summary()
   y = np.array(train[target]).astype(np.int32)
 
-  prediction = model.predict_proba(X_test)[:, 0]
+  prediction = model.predict_proba(X_test)[:, 1]
   y_true = list(hold[target])
   score += [roc_auc_score(y_true, prediction)]
 
