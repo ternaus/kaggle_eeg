@@ -71,8 +71,7 @@ for subject in range(1, 13):
 
     clf = gl.graphlab.deeplearning.create(train,
                                         target=target,
-                                        features=features,
-                                        validation_set=None)
+                                        features=features)
 
     temp[target] = clf.predict(test, output_type='probability')
 
